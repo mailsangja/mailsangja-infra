@@ -11,10 +11,10 @@ spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - mail-argocd.ajou.app
+        - argocd.asitis.dev
       secretName: argocd-server-tls
   rules:
-    - host: mail-argocd.ajou.app
+    - host: argocd.asitis.dev
       http:
         paths:
           - path: /
