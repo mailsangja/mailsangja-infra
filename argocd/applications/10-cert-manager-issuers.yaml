@@ -9,7 +9,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/mailsangja/mailsangja-infra.git
+    repoURL: git@github.com:asitisdev/mailsangja-orbstack.git
     targetRevision: main
     path: platform/cert-manager-issuers
 
