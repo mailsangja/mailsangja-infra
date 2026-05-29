@@ -6,7 +6,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-staging
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    traefik.ingress.kubernetes.io/service.serversscheme: https
+    traefik.ingress.kubernetes.io/service.serversscheme: http
 spec:
   ingressClassName: traefik
   tls:
@@ -23,4 +23,4 @@ spec:
               service:
                 name: argocd-server
                 port:
-                  name: https
+                  name: http
