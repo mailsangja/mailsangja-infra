@@ -18,7 +18,6 @@ data:
   PGDATA: /var/lib/postgresql
   JAVA_TOOL_OPTIONS: -Duser.timezone=Asia/Seoul
   API_DOMAIN: mail.asitis.dev
-  SERVER_PORT: "8080"
   WORKER_PORT: "8081"
   CORS_ALLOWED_ORIGINS: https://mail.asitis.dev
   INBOX_API_BASE_URI: https://mail.asitis.dev
