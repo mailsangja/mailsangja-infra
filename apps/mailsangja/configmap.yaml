@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mailsangja-infra-config
+  namespace: mailsangja
+data:
+  DB_NAME: mailsangja
+  DB_USERNAME: mailsangja
+  DB_HOST: postgres
+  DB_PORT: "5432"
+  REDIS_HOST: redis
+  REDIS_PORT: "6379"
+  RABBITMQ_HOST: rabbitmq
+  RABBITMQ_PORT: "5672"
+  RABBITMQ_USERNAME: mailsangja
+  RABBITMQ_VHOST: mailsangja
+  TZ: Asia/Seoul
+  PGDATA: /var/lib/postgresql
+  JAVA_TOOL_OPTIONS: -Duser.timezone=Asia/Seoul
+  API_DOMAIN: mail.asitis.dev
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init-scripts
+  namespace: mailsangja
+data:
+  00-extensions.sql: |
+    CREATE EXTENSION IF NOT EXISTS vector;
+    CREATE EXTENSION IF NOT EXISTS hstore;
+    CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+    CREATE EXTENSION IF NOT EXISTS textsearch_ko;
+    CREATE EXTENSION IF NOT EXISTS pg_trgm;
