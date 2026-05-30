@@ -18,6 +18,7 @@
 - 플랫폼 구성요소와 비즈니스 애플리케이션은 디렉터리 계층으로 분리한다.
 - 의존성 순서는 Argo CD sync wave로 명시한다.
 - k3s 기본 Traefik을 ingress 표준으로 사용한다.
+- secret은 Git에 평문으로 저장하지 않고 Sealed Secrets로 관리한다.
 - 시점 의존적인 운영 메모는 아키텍처 문서가 아니라 runbook이나 작업 문서에
   둔다.
 
@@ -137,6 +138,7 @@ platform/<component>/
 apps/
   <app-name>/
     namespace.yaml
+    sealedsecret-<secret-name>.yaml
     deployment.yaml
     service.yaml
     ingress.yaml
@@ -378,6 +380,30 @@ metadata:
     traefik.ingress.kubernetes.io/service.serversscheme: https
 ```
 
+## Secret 관리 전략
+
+이 클러스터의 GitOps secret 관리는 Sealed Secrets를 표준으로 사용한다.
+
+Sealed Secrets controller는 platform component로 배포한다. controller는
+`SealedSecret` custom resource를 복호화해 대상 namespace의 Kubernetes
+`Secret`을 생성한다. controller application은 다른 `SealedSecret` 리소스보다
+먼저 배포되도록 wave `00` 계층에 둔다.
+
+Git에는 평문 `Secret` manifest를 저장하지 않는다. 애플리케이션 manifest는
+런타임에서 필요한 Kubernetes `Secret` 이름을 참조하고, 해당 `Secret`을 생성하는
+`SealedSecret` manifest만 저장소에 둔다.
+
+애플리케이션이 단독으로 사용하는 secret은 해당 `apps/<app-name>/` 디렉터리에
+둔다. 여러 구성요소가 공유하거나 플랫폼 구성에 속하는 secret은 소유권이 명확한
+`platform/<component>/` 디렉터리에 둔다.
+
+`SealedSecret`은 기본적으로 name과 namespace가 고정되는 strict scope를
+사용한다. 더 넓은 scope는 동일 secret을 이동하거나 재사용해야 하는 명확한
+이유가 있을 때만 사용한다.
+
+Sealed Secrets controller의 private key는 기존 `SealedSecret` 복호화에
+필요하므로 Git 외부의 안전한 위치에 백업한다.
+
 ## Platform Component 작성 규칙
 
 platform component를 추가할 때는 다음 구조를 사용한다.
@@ -413,8 +439,8 @@ platform 디렉터리로 분리한다.
 
 - 인증서가 필요하면 `ClusterIssuer` 이름을 Ingress annotation으로 참조한다.
 - 외부 노출이 필요하면 `ingressClassName: traefik`을 사용한다.
-- secret이 필요하면 합의된 secret provider 또는 Kubernetes secret 참조를
-  사용한다.
+- secret이 필요하면 Kubernetes `Secret` 이름을 참조하고, Git에는 이를 생성하는
+  `SealedSecret` manifest를 둔다.
 
 애플리케이션별 Argo CD application은 다음 구조를 따른다.
 
@@ -473,8 +499,7 @@ root application은 하위 application을 생성할 수 있으므로 저장소 w
 2. Argo CD `AppProject`로 source repository, destination namespace, cluster
    resource 허용 범위를 제한한다.
 3. platform application과 app application을 서로 다른 project로 분리한다.
-4. secret은 Git에 평문으로 저장하지 않고 secret backend 또는 암호화된 manifest
-   전략을 사용한다.
+4. secret은 Git에 평문으로 저장하지 않고 Sealed Secrets manifest로 관리한다.
 
 ## 문서화 규칙
 
@@ -500,3 +525,5 @@ root application은 하위 application을 생성할 수 있으므로 저장소 w
   https://cert-manager.io/docs/installation/helm/
 - Traefik Kubernetes Ingress routing:
   https://doc.traefik.io/traefik/reference/routing-configuration/kubernetes/ingress/
+- Sealed Secrets:
+  https://github.com/bitnami-labs/sealed-secrets
