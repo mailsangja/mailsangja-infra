@@ -19,7 +19,7 @@ data:
   JAVA_TOOL_OPTIONS: -Duser.timezone=Asia/Seoul
   API_DOMAIN: mail-api.ajou.app
   WORKER_PORT: "8081"
-  CORS_ALLOWED_ORIGINS: https://mail-api.ajou.app
+  CORS_ALLOWED_ORIGINS: https://mail-api.ajou.app,https://mail.ajou.app,https://mail.localhost
   INBOX_API_BASE_URI: https://mail-api.ajou.app
   INBOX_PAGE_SIZE: "50"
   MULTIPART_MAX_FILE_SIZE: 10MB
