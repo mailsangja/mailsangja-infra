@@ -27,10 +27,38 @@ spec:
     - host: mail.asitis.dev
       http:
         paths:
-          - path: /
+          - path: /api
             pathType: Prefix
             backend:
               service:
                 name: core
+                port:
+                  name: http
+          - path: /v3/api-docs
+            pathType: Prefix
+            backend:
+              service:
+                name: core
+                port:
+                  name: http
+          - path: /swagger-ui
+            pathType: Prefix
+            backend:
+              service:
+                name: core
+                port:
+                  name: http
+          - path: /scalar
+            pathType: Prefix
+            backend:
+              service:
+                name: core
+                port:
+                  name: http
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
                 port:
                   name: http
