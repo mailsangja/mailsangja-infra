@@ -453,6 +453,13 @@ apps/<app-name>/
 cluster-wide issuer, shared policy처럼 여러 앱이 공유하는 리소스는
 `platform/`에 둔다.
 
+## 릴리스 운영
+
+이미지 빌드, 이미지 태그 변경 PR, 설정 변경 순서, rollback 기준은 별도 운영
+문서에서 관리한다.
+
+- [릴리스와 이미지 업데이트 운영](./release-management.md)
+
 ## 환경과 클러스터 확장
 
 단일 k3s 클러스터에서는 이 문서의 단순 구조를 유지한다.
