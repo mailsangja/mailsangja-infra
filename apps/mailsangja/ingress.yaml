@@ -1,0 +1,36 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: mailsangja-security-headers
+  namespace: mailsangja
+spec:
+  headers:
+    stsSeconds: 31536000
+    contentTypeNosniff: true
+    customFrameOptionsValue: DENY
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mailsangja
+  namespace: mailsangja
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    traefik.ingress.kubernetes.io/router.middlewares: mailsangja-mailsangja-security-headers@kubernetescrd
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - mail-api.ajou.app
+      secretName: mailsangja-tls
+  rules:
+    - host: mail-api.ajou.app
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: core
+                port:
+                  name: http
