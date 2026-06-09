@@ -1,0 +1,602 @@
+apiVersion: v1
+data:
+  gmail-sync-debug.json: |
+    {
+      "uid": "mailsangja-gmail-sync-debug",
+      "title": "Mailsangja Gmail Sync Debug",
+      "tags": ["mailsangja", "gmail", "debug"],
+      "timezone": "browser",
+      "schemaVersion": 41,
+      "version": 1,
+      "refresh": "10s",
+      "time": {
+        "from": "now-1h",
+        "to": "now"
+      },
+      "templating": {
+        "list": [
+          {
+            "name": "workId",
+            "type": "textbox",
+            "query": "",
+            "current": {
+              "text": "",
+              "value": ""
+            }
+          },
+          {
+            "name": "mailAccountId",
+            "type": "textbox",
+            "query": "",
+            "current": {
+              "text": "",
+              "value": ""
+            }
+          },
+          {
+            "name": "gmailThreadId",
+            "type": "textbox",
+            "query": "",
+            "current": {
+              "text": "",
+              "value": ""
+            }
+          },
+          {
+            "name": "gmailMessageId",
+            "type": "textbox",
+            "query": "",
+            "current": {
+              "text": "",
+              "value": ""
+            }
+          },
+          {
+            "name": "historyId",
+            "type": "textbox",
+            "query": "",
+            "current": {
+              "text": "",
+              "value": ""
+            }
+          }
+        ]
+      },
+      "panels": [
+        {
+          "id": 1,
+          "title": "Gmail Related Warn/Error Logs",
+          "type": "logs",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": true,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": true,
+            "sortOrder": "Descending",
+            "wrapLogMessage": true
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "{service=~\"mailsangja-core|mailsangja-worker\", level=~\"WARN|ERROR\"} |~ \"(?i)gmail|mail sync|history|watch|message\"",
+              "queryType": "range"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Search by Work ID",
+          "type": "logs",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 10
+          },
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": true,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": true,
+            "sortOrder": "Descending",
+            "wrapLogMessage": true
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "{service=~\"mailsangja-core|mailsangja-worker\"} | json | workId=\"$workId\"",
+              "queryType": "range"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "title": "Search by Mail Account",
+          "type": "logs",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 18
+          },
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": true,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": true,
+            "sortOrder": "Descending",
+            "wrapLogMessage": true
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "{service=~\"mailsangja-core|mailsangja-worker\"} | json | mailAccountId=\"$mailAccountId\"",
+              "queryType": "range"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "title": "Search by Gmail Thread ID",
+          "type": "logs",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 26
+          },
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": true,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": true,
+            "sortOrder": "Descending",
+            "wrapLogMessage": true
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "{service=~\"mailsangja-core|mailsangja-worker\"} | json | gmailThreadId=\"$gmailThreadId\"",
+              "queryType": "range"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "title": "Search by Gmail Message ID",
+          "type": "logs",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 34
+          },
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": true,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": true,
+            "sortOrder": "Descending",
+            "wrapLogMessage": true
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "{service=~\"mailsangja-core|mailsangja-worker\"} | json | gmailMessageId=\"$gmailMessageId\"",
+              "queryType": "range"
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "title": "Search by Gmail History ID",
+          "type": "logs",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 42
+          },
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": true,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": true,
+            "sortOrder": "Descending",
+            "wrapLogMessage": true
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "{service=~\"mailsangja-core|mailsangja-worker\"} | json | historyId=\"$historyId\"",
+              "queryType": "range"
+            }
+          ]
+        }
+      ]
+    }
+  service-overview.json: |
+    {
+      "uid": "mailsangja-service-overview",
+      "title": "Mailsangja Service Overview",
+      "tags": ["mailsangja", "observability"],
+      "timezone": "browser",
+      "schemaVersion": 41,
+      "version": 1,
+      "refresh": "10s",
+      "time": {
+        "from": "now-1h",
+        "to": "now"
+      },
+      "templating": {
+        "list": [
+          {
+            "name": "service",
+            "type": "query",
+            "datasource": {
+              "type": "loki",
+              "uid": "loki"
+            },
+            "query": "label_values(service)",
+            "refresh": 1,
+            "includeAll": true,
+            "allValue": ".+",
+            "multi": true,
+            "current": {
+              "selected": true,
+              "text": "All",
+              "value": "$__all"
+            }
+          },
+          {
+            "name": "level",
+            "type": "query",
+            "datasource": {
+              "type": "loki",
+              "uid": "loki"
+            },
+            "query": "label_values({service=~\"$service\"}, level)",
+            "refresh": 1,
+            "includeAll": true,
+            "allValue": ".+",
+            "multi": true,
+            "current": {
+              "selected": true,
+              "text": "All",
+              "value": "$__all"
+            }
+          }
+        ]
+      },
+      "panels": [
+        {
+          "id": 1,
+          "title": "Log Volume",
+          "type": "timeseries",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 0
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "sum by (service) (count_over_time({service=~\"$service\", level=~\"$level\"}[5m]))",
+              "queryType": "range"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Warn/Error Volume",
+          "type": "timeseries",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 0
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "sum by (service, level) (count_over_time({service=~\"$service\", level=~\"WARN|ERROR\"}[5m]))",
+              "queryType": "range"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "title": "Recent Warn/Error Logs",
+          "type": "logs",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 8
+          },
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": true,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": true,
+            "sortOrder": "Descending",
+            "wrapLogMessage": true
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "{service=~\"$service\", level=~\"WARN|ERROR\"}",
+              "queryType": "range"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "title": "Queue/RoutingKey Volume",
+          "type": "timeseries",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 18
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "sum by (queue, routingKey) (count_over_time({service=~\"$service\", queue=~\".+\"}[5m]))",
+              "queryType": "range"
+            }
+          ]
+        }
+      ]
+    }
+  worker-flow.json: |
+    {
+      "uid": "mailsangja-worker-flow",
+      "title": "Mailsangja Worker Flow",
+      "tags": ["mailsangja", "worker", "rabbitmq"],
+      "timezone": "browser",
+      "schemaVersion": 41,
+      "version": 1,
+      "refresh": "10s",
+      "time": {
+        "from": "now-1h",
+        "to": "now"
+      },
+      "templating": {
+        "list": [
+          {
+            "name": "queue",
+            "type": "query",
+            "datasource": {
+              "type": "loki",
+              "uid": "loki"
+            },
+            "query": "label_values({service=\"mailsangja-worker\"}, queue)",
+            "refresh": 1,
+            "includeAll": true,
+            "allValue": ".+",
+            "multi": true,
+            "current": {
+              "selected": true,
+              "text": "All",
+              "value": "$__all"
+            }
+          },
+          {
+            "name": "routingKey",
+            "type": "query",
+            "datasource": {
+              "type": "loki",
+              "uid": "loki"
+            },
+            "query": "label_values({service=\"mailsangja-worker\"}, routingKey)",
+            "refresh": 1,
+            "includeAll": true,
+            "allValue": ".+",
+            "multi": true,
+            "current": {
+              "selected": true,
+              "text": "All",
+              "value": "$__all"
+            }
+          },
+          {
+            "name": "eventType",
+            "type": "query",
+            "datasource": {
+              "type": "loki",
+              "uid": "loki"
+            },
+            "query": "label_values({service=\"mailsangja-worker\"}, eventType)",
+            "refresh": 1,
+            "includeAll": true,
+            "allValue": ".+",
+            "multi": true,
+            "current": {
+              "selected": true,
+              "text": "All",
+              "value": "$__all"
+            }
+          }
+        ]
+      },
+      "panels": [
+        {
+          "id": 1,
+          "title": "Queue Volume",
+          "type": "timeseries",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 0
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "sum by (queue) (count_over_time({service=\"mailsangja-worker\", queue=~\"$queue\"}[5m]))",
+              "queryType": "range"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Event Type Volume",
+          "type": "timeseries",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 0
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "sum by (eventType) (count_over_time({service=\"mailsangja-worker\", eventType=~\"$eventType\"}[5m]))",
+              "queryType": "range"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "title": "Worker Warnings and Errors",
+          "type": "logs",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 8
+          },
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": true,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": true,
+            "sortOrder": "Descending",
+            "wrapLogMessage": true
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "{service=\"mailsangja-worker\", queue=~\"$queue\", routingKey=~\"$routingKey\", eventType=~\"$eventType\", level=~\"WARN|ERROR\"}",
+              "queryType": "range"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "title": "Worker Logs",
+          "type": "logs",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 18
+          },
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": true,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": true,
+            "sortOrder": "Descending",
+            "wrapLogMessage": true
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "{service=\"mailsangja-worker\", queue=~\"$queue\", routingKey=~\"$routingKey\", eventType=~\"$eventType\"}",
+              "queryType": "range"
+            }
+          ]
+        }
+      ]
+    }
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: mailsangja
+    app.kubernetes.io/component: grafana
+  name: grafana-dashboards
+  namespace: mailsangja
