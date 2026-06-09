@@ -49,7 +49,7 @@ spec:
               until nc -z rabbitmq 5672; do sleep 2; done
       containers:
         - name: worker
-          image: ghcr.io/mailsangja/mailsangja-worker:sha-d199118c11efe2b355f27e81acaf6362b550b3de
+          image: ghcr.io/mailsangja/mailsangja-worker:sha-c5aedfd5739e6aea9a39e8fef1bcbd29ca9e3fc5
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

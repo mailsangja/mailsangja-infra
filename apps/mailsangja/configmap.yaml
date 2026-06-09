@@ -17,7 +17,13 @@ data:
   TZ: Asia/Seoul
   PGDATA: /var/lib/postgresql
   JAVA_TOOL_OPTIONS: -Duser.timezone=Asia/Seoul
+  LOGGING_STRUCTURED_FORMAT_CONSOLE: logstash
+  MANAGEMENT_TRACING_EXPORT_OTLP_ENABLED: "true"
+  MANAGEMENT_OPENTELEMETRY_TRACING_EXPORT_OTLP_ENDPOINT: http://alloy:4318/v1/traces
   API_DOMAIN: mail-api.ajou.app
+  GRAFANA_ADMIN_USER: admin
+  GRAFANA_ROOT_URL: https://grafana.mail-api.ajou.app/
+  GRAFANA_SERVE_FROM_SUB_PATH: "false"
   WORKER_PORT: "8081"
   CORS_ALLOWED_ORIGINS: https://mail-api.ajou.app,https://mail.ajou.app,https://mail.localhost
   INBOX_API_BASE_URI: https://mail-api.ajou.app
@@ -36,12 +42,16 @@ data:
   AI_PGVECTOR_ID_TYPE: UUID
   AI_PGVECTOR_INITIALIZE_SCHEMA: "true"
   AI_CHAT_PROVIDER: openai
+  AI_DEFAULT_MODEL: openai/gpt-5.3-chat
+  MAIL_DRAFT_MODEL: openai/gpt-5.3-chat
+  LABEL_SUGGESTION_MODEL: deepseek/deepseek-v4-flash
+  REPLY_DRAFT_SUGGESTION_MODEL: deepseek/deepseek-v4-flash
+  AI_ALLOWED_MODELS: deepseek/deepseek-v4-flash,deepseek/deepseek-v4-pro,xiaomi/mimo-v2.5,xiaomi/mimo-v2.5-pro,minimax/minimax-m3,moonshotai/kimi-k2.5,qwen/qwen3.7-plus,google/gemini-3-flash-preview,google/gemini-3.1-pro-preview,openai/gpt-5.4-mini,openai/gpt-5.3-chat,openai/gpt-5.5,anthropic/claude-haiku-4.5,anthropic/claude-sonnet-4.6,x-ai/grok-4.3
+  OPENAI_BASE_URL: https://openrouter.ai/api/v1
   OPENAI_CHAT_BASE_URL: https://openrouter.ai/api/v1
-  OPENAI_CHAT_MODEL: deepseek/deepseek-v4-flash
+  OPENAI_CHAT_MODEL: openai/gpt-5.3-chat
   OPENAI_EMBEDDING_BASE_URL: http://100.64.82.60:8000/v1
   OPENAI_EMBEDDING_MODEL: Qwen/Qwen3-Embedding-0.6B
-  GOOGLE_GENAI_CHAT_MODEL: gemini-3.1-flash-lite
-  GOOGLE_GENAI_EMBEDDING_MODEL: gemini-embedding-001
   GOOGLE_CLIENT_ID: 16783463112-j9jbrm43cil9hr8tv5jefgnt48ueqpdr.apps.googleusercontent.com
   MAIL_TASK_EXCHANGE: mailsangja.mail.task
   MAIL_TASK_DLX_EXCHANGE: mailsangja.mail.task.dlx
@@ -54,12 +64,14 @@ data:
   INITIAL_MAIL_SYNC_PREFETCH: "3"
   INITIAL_MAIL_SYNC_THREAD_BATCH_CONCURRENCY: "5"
   INITIAL_MAIL_SYNC_THREAD_BATCH_PREFETCH: "5"
+  GOOGLE_GMAIL_INITIAL_SYNC_THREAD_BATCH_SIZE: "5"
   GMAIL_MESSAGE_ADDED_CONCURRENCY: "3"
   GMAIL_MESSAGE_ADDED_PREFETCH: "3"
   GMAIL_HISTORY_STATE_CONCURRENCY: "5"
   GMAIL_HISTORY_STATE_PREFETCH: "10"
   WATCH_RENEWAL_CONCURRENCY: "2"
   WATCH_RENEWAL_PREFETCH: "2"
+  LABEL_RECLASSIFY_MESSAGE_BATCH_SIZE: "50"
   LABEL_RECLASSIFY_CONCURRENCY: "3"
   LABEL_RECLASSIFY_PREFETCH: "3"
   MAIL_EMBEDDING_CONCURRENCY: "3"
@@ -116,6 +128,10 @@ data:
   MAILSANGJA_REDIS_RATE_LIMIT_WEEKLY_DRAFT_LIMIT: "10"
   MAILSANGJA_REDIS_RATE_LIMIT_WEEKLY_REVIEW_LIMIT: "10"
   MAILSANGJA_REDIS_RATE_LIMIT_WEEKLY_SUGGESTION_LIMIT: "5"
+  MAILSANGJA_REDIS_RATE_LIMIT_WEEKLY_PLAYGROUND_LIMIT: "50"
+  MAILSANGJA_REDIS_RATE_LIMIT_WEEKLY_PRO_DRAFT_LIMIT: "50"
+  MAILSANGJA_REDIS_RATE_LIMIT_WEEKLY_PRO_REVIEW_LIMIT: "50"
+  MAILSANGJA_REDIS_RATE_LIMIT_WEEKLY_PRO_SUGGESTION_LIMIT: "25"
   MAIL_ACCOUNT_MAX_COUNT: "2"
   AI_REPLY_DRAFT_MIN_THREAD_MESSAGE_COUNT: "2"
 ---
