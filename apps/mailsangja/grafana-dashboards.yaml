@@ -8,7 +8,7 @@ data:
       "timezone": "browser",
       "schemaVersion": 41,
       "version": 1,
-      "refresh": "10s",
+      "refresh": "30s",
       "time": {
         "from": "now-1h",
         "to": "now"
@@ -91,6 +91,7 @@ data:
             {
               "refId": "A",
               "expr": "{service=~\"mailsangja-core|mailsangja-worker\", level=~\"WARN|ERROR\"} |~ \"(?i)gmail|mail sync|history|watch|message\"",
+              "maxLines": 200,
               "queryType": "range"
             }
           ]
@@ -123,6 +124,7 @@ data:
             {
               "refId": "A",
               "expr": "{service=~\"mailsangja-core|mailsangja-worker\"} | json | workId=\"$workId\"",
+              "maxLines": 200,
               "queryType": "range"
             }
           ]
@@ -155,6 +157,7 @@ data:
             {
               "refId": "A",
               "expr": "{service=~\"mailsangja-core|mailsangja-worker\"} | json | mailAccountId=\"$mailAccountId\"",
+              "maxLines": 200,
               "queryType": "range"
             }
           ]
@@ -187,6 +190,7 @@ data:
             {
               "refId": "A",
               "expr": "{service=~\"mailsangja-core|mailsangja-worker\"} | json | gmailThreadId=\"$gmailThreadId\"",
+              "maxLines": 200,
               "queryType": "range"
             }
           ]
@@ -219,6 +223,7 @@ data:
             {
               "refId": "A",
               "expr": "{service=~\"mailsangja-core|mailsangja-worker\"} | json | gmailMessageId=\"$gmailMessageId\"",
+              "maxLines": 200,
               "queryType": "range"
             }
           ]
@@ -251,6 +256,7 @@ data:
             {
               "refId": "A",
               "expr": "{service=~\"mailsangja-core|mailsangja-worker\"} | json | historyId=\"$historyId\"",
+              "maxLines": 200,
               "queryType": "range"
             }
           ]
@@ -265,7 +271,7 @@ data:
       "timezone": "browser",
       "schemaVersion": 41,
       "version": 1,
-      "refresh": "10s",
+      "refresh": "30s",
       "time": {
         "from": "now-1h",
         "to": "now"
@@ -383,6 +389,7 @@ data:
             {
               "refId": "A",
               "expr": "{service=~\"$service\", level=~\"WARN|ERROR\"}",
+              "maxLines": 200,
               "queryType": "range"
             }
           ]
@@ -419,7 +426,7 @@ data:
       "timezone": "browser",
       "schemaVersion": 41,
       "version": 1,
-      "refresh": "10s",
+      "refresh": "30s",
       "time": {
         "from": "now-1h",
         "to": "now"
@@ -555,6 +562,7 @@ data:
             {
               "refId": "A",
               "expr": "{service=\"mailsangja-worker\", queue=~\"$queue\", routingKey=~\"$routingKey\", eventType=~\"$eventType\", level=~\"WARN|ERROR\"}",
+              "maxLines": 200,
               "queryType": "range"
             }
           ]
@@ -587,6 +595,7 @@ data:
             {
               "refId": "A",
               "expr": "{service=\"mailsangja-worker\", queue=~\"$queue\", routingKey=~\"$routingKey\", eventType=~\"$eventType\"}",
+              "maxLines": 200,
               "queryType": "range"
             }
           ]
