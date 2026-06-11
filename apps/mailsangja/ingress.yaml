@@ -30,6 +30,20 @@ spec:
     - host: mail-api.ajou.app
       http:
         paths:
+          - path: /api/v1/gmail/push
+            pathType: Exact
+            backend:
+              service:
+                name: worker
+                port:
+                  name: http
+          - path: /api/v1/payments/webhook
+            pathType: Exact
+            backend:
+              service:
+                name: worker
+                port:
+                  name: http
           - path: /
             pathType: Prefix
             backend:
